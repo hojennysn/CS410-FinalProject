@@ -34,6 +34,11 @@ function get_data(subreddit){
             console.log(response);
             $('#temp').text("Recommended Results");
             display_topics(JSON.parse(response));
+        },
+        error: function (error) {
+            finished_loading();
+            console.log(error);
+            $('#temp').text("Something went wrong. Maybe try another subreddit?");
         }
     });
 }
@@ -45,9 +50,10 @@ $('#topics-btn').click(function () {
     let sub = $('#subreddit').val();
     if(sub === ""){
         alert("Empty Search Field");
-        return
+        return;
     }
 
     loading();
+    console.log("Fetching data with subreddit " + subreddit);
     get_data(sub);
 });
