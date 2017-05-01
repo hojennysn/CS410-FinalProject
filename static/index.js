@@ -2,7 +2,7 @@ function display_topics(topics) {
     for(i=0; i < topics.length; i++){
         let $li = $("<li>", {"class":"list-group-item"});
         let $link = "https://www.reddit.com/r/" + topics[i];
-        let $a = $("<a>", {text: topics[i], href: $link});
+        let $a = $("<a>", {text: topics[i], href: $link, target: "_blank"});
         $li.append($a);
         $(".list-group").append($li);
     }
