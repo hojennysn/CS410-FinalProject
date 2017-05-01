@@ -52,8 +52,6 @@ def getTopKWordsInVocab(vocabLst, vocabActual, k):
     for word in vocabLst:
         wordCount[word] = vocabActual.count(word)
     sortedWordCount = sorted(wordCount, key=wordCount.__getitem__, reverse=True)
-    for i in range(k):
-        print (sortedWordCount[i], wordCount[sortedWordCount[i]])
     return sortedWordCount[:k]
 
 def main():
@@ -70,6 +68,5 @@ def main():
     #for doc in docCollection:
         #print (len(doc))
     top5words = getTopKWordsInVocab(vocab, orgVocab, 5)
-    print (top5words)
 
 if __name__ == "__main__": main()
