@@ -1,13 +1,13 @@
 from flask import Flask, render_template, jsonify, request
 import json
 import random
+from processing import scraper
 
 app = Flask(__name__)
 
 
-def random_topics(sub):
-    temp = random.sample(range(100), 10)
-    temp.append(sub)
+def random_topics(searchTerm, stopwords, numIter):
+    temp = scraper.caller(searchTerm, stopwords, numIter)
     return temp
 
 
@@ -21,7 +21,7 @@ def get_topics():
     if request.method == 'GET':
         if 'subreddit' in request.args:
             sub = request.args.get('subreddit')
-            topics = random_topics(sub)
+            topics = random_topics(sub, "processing/lemur-stopwords-edit.txt", 5)
             return json.dumps(topics)
 
     return jsonify(result="nope")
