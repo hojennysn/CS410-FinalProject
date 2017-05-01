@@ -9,7 +9,7 @@ reddit = praw.Reddit(user_agent='SimSubReds',
                      password='wedungoofed',
                      username='UIUCcs410')
 
-def get_comments(subred):
+def getComments(subred):
 	num = 0
 	f = open('comments.txt', 'a+')
 	commentList = []
@@ -33,17 +33,20 @@ def getStopWords(fileName):
 			stopwords.append(line.rstrip())
 	return stopwords
 
+def genVocab(comments):
+	stemmer = PorterStemmer()
+	stop = getStopWords(sys.argv[2])
+	translator = str.maketrans('', '', string.punctuation)
+	vocab = [com.translate(translator).lower() for com in comments]
+	return [stemmer.stem(v) for v in vocab if v not in stop]
+
 def main():
-    if len(sys.argv) > 3:
-    	print ("Too many arguments")
+    if len(sys.argv) != 3:
+    	print ("Wrong number of arguments, expected: 3, got: {}".format((len(sys.argv)-1)))
+    	print ("Usage: python3 scraper.py [subreddit name] [stopwords filename]")
     	sys.exit()
-    comments = (get_comments(sys.argv[1]))
-    stemmer = PorterStemmer()
-    stop = getStopWords(sys.argv[2])
-    translator = str.maketrans('', '', string.punctuation)
-    vocab = [com.translate(translator).lower() for com in comments]
-    vocabpr = [stemmer.stem(v) for v in vocab if v not in stop]
+    comments = (getComments(sys.argv[1]))
+    vocab = genVocab(comments)
     print (vocab)
-    print (vocabpr)
 
 if __name__ == "__main__": main()
