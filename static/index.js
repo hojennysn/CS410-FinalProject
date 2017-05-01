@@ -1,11 +1,16 @@
 function display_topics(topics) {
-    for(i=0; i < topics.length; i++){
-        let $li = $("<li>", {"class":"list-group-item"});
-        let $link = "https://www.reddit.com/r/" + topics[i];
-        let $a = $("<a>", {text: topics[i], href: $link, target: "_blank"});
-        $li.append($a);
-        $(".list-group").append($li);
+    if(topics.length !== 0) {
+        $('#temp').text("Recommended Results");
+        for (i = 0; i < topics.length; i++) {
+            let $li = $("<li>", {"class": "list-group-item"});
+            let $link = "https://www.reddit.com/r/" + topics[i];
+            let $a = $("<a>", {text: topics[i], href: $link, target: "_blank"});
+            $li.append($a);
+            $(".list-group").append($li);
+        }
     }
+
+    $('#temp').text("Subreddit does not exist");
 }
 
 
@@ -32,7 +37,6 @@ function get_data(subreddit){
         success: function (response) {
             finished_loading();
             console.log(response);
-            $('#temp').text("Recommended Results");
             display_topics(JSON.parse(response));
         },
         error: function (error) {
