@@ -37,7 +37,8 @@ def genVocab(comments):
     stop = getStopWords(sys.argv[2])
     translator = str.maketrans('', '', string.punctuation)
     vocab = [com.translate(translator).lower() for com in comments]
-    return list(set([stemmer.stem(v) for v in vocab if v not in stop]))
+    actualVocab = [stemmer.stem(v) for v in vocab if v not in stop]
+    return (list(set(actualVocab)) , actualVocab)
 
 def genDoc(docArg):
     stemmer = PorterStemmer()
@@ -46,20 +47,29 @@ def genDoc(docArg):
     doc = [word.translate(translator).lower() for word in docArg]
     return [stemmer.stem(word) for word in doc if word not in stop]
 
+def getTopKWordsInVocab(vocabLst, vocabActual, k):
+    wordCount = {word: 0 for word in vocabLst}
+    for word in vocabLst:
+        wordCount[word] = vocabActual.count(word)
+    sortedWordCount = sorted(wordCount, key=wordCount.__getitem__, reverse=True)
+    for i in range(k):
+        print (sortedWordCount[i], wordCount[sortedWordCount[i]])
+    return sortedWordCount[:k]
+
 def main():
     if len(sys.argv) != 3:
         print ("Wrong number of arguments, expected: 3, got: {}".format((len(sys.argv)-1)))
         print ("Usage: python3 scraper.py [subreddit name] [stopwords filename]")
         sys.exit()
     comments, docCollection = (getComments(sys.argv[1]))
-    vocab = genVocab(comments)
-    #print ("Vocab size: {}".format(len(vocab)))
-    #print ("Original lengths")
+    vocab, orgVocab = genVocab(comments)
     for i in range(len(docCollection)):
         #print (len(docCollection[i]))
         docCollection[i] = genDoc(docCollection[i])
     #print ("New lengths")
     #for doc in docCollection:
         #print (len(doc))
+    top5words = getTopKWordsInVocab(vocab, orgVocab, 5)
+    print (top5words)
 
 if __name__ == "__main__": main()
