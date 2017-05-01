@@ -11,3 +11,7 @@ html, body{
     text-align: center;
     margin-bottom: 5px;
 }
+
+.list-group-item:hover {
+    background-color: rgba(100,100,100, 0.8);
+}
