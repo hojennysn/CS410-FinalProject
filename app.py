@@ -22,8 +22,10 @@ def get_topics():
         if 'subreddit' in request.args:
             sub = request.args.get('subreddit')
             topics = random_topics(sub, "processing/lemur-stopwords-edit.txt", 5)
+            if topics is None:
+                print ("No such sub")
+                return json.dumps([])
             return json.dumps(topics)
-
     return jsonify(result="nope")
 
 if __name__ == '__main__':

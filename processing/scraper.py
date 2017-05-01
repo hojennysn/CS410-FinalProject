@@ -2,12 +2,21 @@ import praw
 import sys
 import string
 from nltk.stem import *
+from prawcore import NotFound
 
 reddit = praw.Reddit(user_agent='SimSubReds',
                      client_id='ZLLdCB1K0e4fLA',
                      client_secret='eVBMIHzTJ50CnuUsbjQcczxCBkA',
                      password='wedungoofed',
                      username='UIUCcs410')
+
+def subExists(sub):
+    exists = True
+    try:
+        reddit.subreddits.search_by_name(sub, exact=True)
+    except NotFound:
+        exists = False
+    return exists
 
 def getComments(subred, niters):
     num = 0
@@ -56,6 +65,8 @@ def getTopKWordsInVocab(vocabLst, vocabActual, k):
     return sortedWordCount[:k]
 
 def caller(searchTerm, stopwords, numIter):
+    if not(subExists(searchTerm)):
+        return None
     comments, docCollection = getComments(searchTerm, numIter)
     vocab, orgVocab = genVocab(comments, stopwords)
     for i in range(len(docCollection)):
@@ -71,6 +82,9 @@ def main():
     if len(sys.argv) != 4:
         print ("Wrong number of arguments, expected: 4, got: {}".format((len(sys.argv)-1)))
         print ("Usage: python3 scraper.py [subreddit name] [stopwords filename] [iterations]")
+        sys.exit()
+    if not(subExists(sys.argv[1])):
+        print ("No subreddit called '{}' found".format(sys.argv[1]))
         sys.exit()
     comments, docCollection = getComments(sys.argv[1], int(sys.argv[3]))
     vocab, orgVocab = genVocab(comments, sys.argv[2])
