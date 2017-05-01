@@ -8,6 +8,7 @@ function display_topics(topics) {
             $li.append($a);
             $(".list-group").append($li);
         }
+        return;
     }
 
     $('#temp').text("Subreddit does not exist");
