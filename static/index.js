@@ -1,7 +1,9 @@
 function display_topics(topics) {
     for(i=0; i < topics.length; i++){
         let $li = $("<li>", {"class":"list-group-item"});
-        $li.text(topics[i]);
+        let $link = "https://www.reddit.com/r/" + topics[i];
+        let $a = $("<a>", {text: topics[i], href: $link});
+        $li.append($a);
         $(".list-group").append($li);
     }
 }
@@ -16,6 +18,7 @@ function finished_loading() {
 
 
 function loading() {
+    $('#temp').text("loading");
     let $div = $("<div>", {"class":"loader"});
     $(".results").append($div)
 }
@@ -40,8 +43,11 @@ $('#topics-btn').click(function () {
     $('.list-group').empty();
 
     let sub = $('#subreddit').val();
-    loading();
-    $('#temp').text("loading");
+    if(sub === ""){
+        alert("Empty Search Field");
+        return
+    }
 
+    loading();
     get_data(sub);
 });
