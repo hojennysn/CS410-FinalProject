@@ -49,18 +49,16 @@ def get_comments(subred):
     for post in reddit.subreddit(subred).top('all', limit=3):
         comment = get_comment_from_post(post)
         comment_clean = genVocab(comment)
-        # print(comment_clean)
-        commentsList.append(comment)
+        print(comment_clean)
+        commentsList.append(comment_clean)
 
-    print(commentsList)
-    print(len(commentsList))
     return commentsList
 
 
 def main():
-    doc_complete = get_comments("all")
-    # doc_clean = ["".join(genVocab(post)) for post in doc_complete]
-    # print(doc_clean)
+    docs_complete = get_comments("all")
+    print(docs_complete)
+    print(len(docs_complete))
 
 
 if __name__ == "__main__":
