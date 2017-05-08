@@ -1,10 +1,7 @@
 import string
 import praw
-import win_unicode_console
 from nltk.stem import *
 
-
-win_unicode_console.enable()
 
 # stop = set(stopwords.words('englsh'))
 exclude = set(string.punctuation)
@@ -49,13 +46,13 @@ def get_comments(subred):
     for post in reddit.subreddit(subred).top('all', limit=3):
         comment = get_comment_from_post(post)
         comment_clean = genVocab(comment)
-        print(comment_clean)
+        # print(comment_clean)
         commentsList.append(comment_clean)
 
     return commentsList
 
 def get_docs():
-    docs_complete = get_comments("all")
+    docs_complete = get_comments("dota2")
     return docs_complete
 
 def main():
