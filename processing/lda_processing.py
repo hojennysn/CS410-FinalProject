@@ -13,7 +13,6 @@ def run_lda(doc_term_matrix, dictionary):
     print(ldamodel.print_topics(num_topics=10, num_words=4))
     #print("Finished \n")
     
-    
     for i in range(10):
         print(ldamodel.show_topic(i, 3), "\n")
         

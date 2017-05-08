@@ -50,12 +50,14 @@ def genVocab(comments, stopwords):
     actualVocab = [stemmer.stem(v) for v in vocab if v not in stop]
     return (list(set(actualVocab)) , actualVocab)
 
+
 def genDoc(docArg, stopwords):
     stemmer = PorterStemmer()
     stop = getStopWords(stopwords)
     translator = str.maketrans('', '', string.punctuation)
     doc = [word.translate(translator).lower() for word in docArg]
     return [stemmer.stem(word) for word in doc if word not in stop]
+
 
 def getTopKWordsInVocab(vocabLst, vocabActual, k):
     wordCount = {word: 0 for word in vocabLst}
@@ -64,6 +66,16 @@ def getTopKWordsInVocab(vocabLst, vocabActual, k):
     sortedWordCount = sorted(wordCount, key=wordCount.__getitem__, reverse=True)
     return sortedWordCount[:k]
 
+
+def get_names_of_subreddits(search_query):
+    recommendation =  reddit.subreddits.search_by_topic(search_query)
+    names = [] 
+    
+    for subr in recommendation:
+        names.append(subr.display_name)
+    return names
+        
+
 def caller(searchTerm, stopwords, numIter):
     if not(subExists(searchTerm)):
         return None
@@ -71,11 +83,9 @@ def caller(searchTerm, stopwords, numIter):
     vocab, orgVocab = genVocab(comments, stopwords)
     for i in range(len(docCollection)):
         docCollection[i] = genDoc(docCollection[i], stopwords)
+        
     top2words = getTopKWordsInVocab(vocab, orgVocab, 2)
-    recommended =  reddit.subreddits.search_by_topic(top2words[0]+ " " +top2words[1])
-    names = []
-    for subr in recommended:
-        names.append(subr.display_name)
+    names = get_names_of_subreddits(top2words[0]+ " " +top2words[1])
     return names
 
 def main():
