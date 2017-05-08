@@ -106,4 +106,6 @@ def main():
     for subr in recommended:
         print (subr.display_name)
 
-if __name__ == "__main__": main()
+if __name__ == "__main__": 
+    main()
+    

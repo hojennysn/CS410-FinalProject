@@ -43,7 +43,7 @@ def get_comment_from_post(post):
 
 def get_comments(subred):
     commentsList = []
-    for post in reddit.subreddit(subred).top('all', limit=3):
+    for post in reddit.subreddit(subred).top('all', limit=25):
         comment = get_comment_from_post(post)
         comment_clean = genVocab(comment)
         # print(comment_clean)
@@ -51,8 +51,8 @@ def get_comments(subred):
 
     return commentsList
 
-def get_docs():
-    docs_complete = get_comments("dota2")
+def get_docs(subred):
+    docs_complete = get_comments(subred)
     return docs_complete
 
 def main():

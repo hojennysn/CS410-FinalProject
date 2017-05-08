@@ -7,9 +7,14 @@ html, body{
 }
 
 .container {
-    background-color: aliceblue;
+    background-color: #94eae780;
     text-align: center;
     margin-bottom: 5px;
+}
+
+.recommendations {
+    display: inline-block;
+    width: 50%;
 }
 
 .list-group-item:hover {
@@ -39,3 +44,24 @@ a:hover {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+#notLDA {
+    float: left;
+}
+
+#LDA {
+    float: right;
+}
+
+#robot {
+    height: 200px;
+}
+
+#smiley {
+    width: 50%;
+    height: 50px;
+    background-color: red;
+    margin: 0 auto;
+    margin-top: 65px;
+}
+
