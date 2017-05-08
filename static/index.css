@@ -53,15 +53,17 @@ a:hover {
     float: right;
 }
 
-#robot {
-    height: 200px;
+
+#smiley div {
+    border: 15px solid #000;
+    display: inline-block;
+    min-width: 20em;
+    min-height: 12em;
+    padding: 0.5em;
+    border-radius: 50%;
+    border-top-color: transparent;
+    border-left-color: transparent;
+    border-right-color: transparent;
 }
 
-#smiley {
-    width: 50%;
-    height: 50px;
-    background-color: red;
-    margin: 0 auto;
-    margin-top: 65px;
-}
 
