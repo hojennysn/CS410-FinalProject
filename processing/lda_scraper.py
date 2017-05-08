@@ -54,9 +54,12 @@ def get_comments(subred):
 
     return commentsList
 
+def get_docs():
+    docs_complete = get_comments("all")
+    return docs_complete
 
 def main():
-    docs_complete = get_comments("all")
+    docs_complete = get_docs()
     print(docs_complete)
     print(len(docs_complete))
 
