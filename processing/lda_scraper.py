@@ -43,7 +43,7 @@ def get_comment_from_post(post):
 
 def get_comments(subred):
     commentsList = []
-    for post in reddit.subreddit(subred).top('all', limit=20):
+    for post in reddit.subreddit(subred).top('all', limit=10):
         comment = get_comment_from_post(post)
         comment_clean = genVocab(comment)
         # print(comment_clean)
